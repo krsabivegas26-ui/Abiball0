@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbiVegas 2026 – Karl-Rehbein-Schule</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#b8972e;--gold-l:#d4b253;--gold-p:#e8d28a;
+  --bg:#0a0a0b;--bg2:#111114;--bg3:#18181d;--bg4:#1f1f26;
+  --text:#ede8df;--text2:#c8c0b0;--muted:#6a6458;
+  --border:rgba(184,151,46,.18);--bsub:rgba(184,151,46,.08);
+  --ok:#7aab8a;--err:#c0605a;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(184,151,46,.06) 0%,transparent 70%)}
+
+/* Page watermark */
+.wm{position:fixed;top:18px;right:18px;transform:none;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(184,151,46,.75);white-space:normal;pointer-events:none;z-index:500;letter-spacing:.08em;user-select:none;text-align:right;line-height:1.1}
+.wm span{display:block}
+.wm .wm-main{font-size:clamp(1.1rem,2vw,1.6rem)}
+.wm .wm-sub{font-family:'Lato',sans-serif;font-size:0.78rem;font-style:normal;color:rgba(184,151,46,.65);letter-spacing:0.08em;margin-top:2px}
+
+/* Header */
+header{position:relative;z-index:1;text-align:center;padding:72px 24px 52px}
+.pre{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.55em;text-transform:uppercase;color:var(--muted);margin-bottom:26px;opacity:0;animation:rise .9s cubic-bezier(.16,1,.3,1) forwards .1s}
+.tw{display:inline-block;opacity:0;animation:rise .9s cubic-bezier(.16,1,.3,1) forwards .25s}
+.t-abi{display:block;font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.8rem);letter-spacing:.7em;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+.t-vegas{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,15vw,10rem);font-weight:300;font-style:italic;line-height:.88;color:var(--gold-l)}
+.t-year{display:block;font-family:'Cinzel',serif;font-size:clamp(.65rem,1.8vw,.9rem);letter-spacing:.45em;color:var(--muted);margin-top:10px}
+.hrd{display:flex;align-items:center;justify-content:center;gap:14px;margin:30px auto 26px;max-width:340px;opacity:0;animation:rise .9s cubic-bezier(.16,1,.3,1) forwards .45s}
+.hrl{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.hdi{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);opacity:.7}
+.school{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);opacity:0;animation:rise .9s cubic-bezier(.16,1,.3,1) forwards .55s}
+
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 100px}
+
+/* Steps */
+.steps{display:flex;align-items:center;justify-content:center;margin-bottom:52px;opacity:0;animation:rise .9s cubic-bezier(.16,1,.3,1) forwards .7s}
+.step{display:flex;flex-direction:column;align-items:center;gap:9px}
+.sn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(184,151,46,.2);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.7rem;color:var(--muted);transition:all .5s}
+.step.active .sn{border-color:var(--gold);color:var(--gold-p);background:rgba(184,151,46,.07);box-shadow:0 0 18px rgba(184,151,46,.15)}
+.step.done .sn{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.sl{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);transition:color .5s}
+.step.active .sl{color:var(--gold-l)}
+.sc{width:60px;height:1px;margin-bottom:22px;background:linear-gradient(90deg,rgba(184,151,46,.08),rgba(184,151,46,.2),rgba(184,151,46,.08))}
+@media(max-width:440px){.sc{width:28px}}
+
+.panel{display:none;animation:rise .5s cubic-bezier(.16,1,.3,1) forwards}.panel.active{display:block}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:300;font-style:italic;text-align:center;margin-bottom:6px}
+.ssub{text-align:center;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.35em;color:var(--muted);text-transform:uppercase;margin-bottom:36px}
+
+/* Floor plan */
+.floor-wrap{background:var(--bg2);border:1px solid var(--bsub);padding:16px 14px 20px;position:relative;overflow:hidden}
+.floor-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.35}
+#floorSvg{width:100%;height:auto;display:block}
+
+/* Legend */
+.leg{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:16px;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:7px;font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ld{width:10px;height:10px;border:1px solid}
+.ld.av  {border-color:rgba(184,151,46,.35);background:rgba(184,151,46,.08)}
+.ld.sel {border-color:var(--gold);background:rgba(184,151,46,.28)}
+.ld.part{border-color:rgba(192,96,90,.45);background:rgba(192,96,90,.18)}
+.ld.full{border-color:rgba(192,96,90,.6);background:rgba(192,96,90,.32)}
+.ld.book{border-color:rgba(100,140,220,.4);background:rgba(80,110,180,.2)}
+
+/* Buttons */
+.btn{display:block;margin:34px auto 0;padding:14px 52px;background:transparent;border:1px solid var(--gold);color:var(--gold-p);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;transition:all .35s;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,151,46,.15),rgba(184,151,46,.05));transform:translateY(100%);transition:transform .35s;z-index:-1}
+.btn:hover:not(:disabled){border-color:var(--gold-l);box-shadow:0 0 28px rgba(184,151,46,.12)}
+.btn:hover:not(:disabled)::before{transform:translateY(0)}
+.btn:disabled{opacity:.2;cursor:not-allowed;border-color:var(--muted);color:var(--muted)}
+.btnb{display:block;margin:14px auto 0;background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:color .3s;text-decoration:underline;text-underline-offset:4px}
+.btnb:hover{color:var(--text2)}
+
+/* Form */
+.fw{max-width:460px;margin:0 auto}
+.seld{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--bg2);border:1px solid rgba(184,151,46,.3);margin-bottom:34px;position:relative}
+.seld::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.3}
+.sicon{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);min-width:36px;text-align:center;letter-spacing:.05em}
+.sinfo{flex:1}
+.slbl2{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.sname{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--gold-l)}
+.sch{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;background:none;border:none;transition:color .2s}
+.sch:hover{color:var(--text2)}
+.fg{margin-bottom:22px}
+.fl{display:block;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.fi{width:100%;background:var(--bg2);border:1px solid var(--bsub);color:var(--text);font-family:'Lato',sans-serif;font-weight:300;font-size:.9rem;padding:13px 16px;transition:all .3s;outline:none}
+.fi:focus{border-color:rgba(184,151,46,.4);background:var(--bg3);box-shadow:0 0 22px rgba(184,151,46,.06)}
+.fi::placeholder{color:var(--muted);opacity:.4}
+.fh{font-size:.62rem;color:var(--muted);margin-top:6px}
+.sr{display:flex;align-items:center;gap:16px}
+.sbt{width:38px;height:38px;background:var(--bg2);border:1px solid var(--bsub);color:var(--gold-l);font-size:1.1rem;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center}
+.sbt:hover{border-color:rgba(184,151,46,.4);background:var(--bg3)}
+.sct{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.2rem;min-width:32px;text-align:center;color:var(--gold-l);line-height:1}
+.smx{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+
+/* Confirm */
+.cc{max-width:460px;margin:0 auto;background:var(--bg2);border:1px solid var(--bsub);padding:48px 40px;text-align:center;position:relative}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.cc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.2}
+.csym{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.9rem;color:var(--gold);margin-bottom:18px;display:block;animation:rise .7s cubic-bezier(.16,1,.3,1) forwards}
+.ctit{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:6px}
+.csb{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:34px}
+.crows{border-top:1px solid var(--bsub);border-bottom:1px solid var(--bsub);padding:22px 0;margin-bottom:26px}
+.crow{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0}
+.crl{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.crv{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--gold-l)}
+.cnote{font-size:.7rem;color:var(--muted);line-height:1.85;margin-bottom:22px}
+.bpdf{display:inline-block;padding:11px 30px;border:1px solid var(--border);color:var(--gold-l);font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;background:none;cursor:pointer;transition:all .3s}
+.bpdf:hover{border-color:var(--gold-l);background:rgba(184,151,46,.06)}
+.brs{display:block;margin:12px auto 0;padding:10px 26px;background:transparent;border:1px solid rgba(255,255,255,.07);color:var(--muted);font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.brs:hover{border-color:var(--muted);color:var(--text2)}
+
+/* Toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg3);border:1px solid var(--bsub);padding:12px 22px;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:500;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{border-color:rgba(192,96,90,.5);color:var(--err)}
+.toast.ok{border-color:rgba(122,171,138,.5);color:var(--ok)}
+.spin{display:inline-block;width:13px;height:13px;border:1.5px solid rgba(184,151,46,.2);border-top-color:var(--gold);border-radius:50%;animation:rot .7s linear infinite;vertical-align:middle;margin-right:8px}
+
+/* Admin */
+.abtn{position:fixed;bottom:14px;right:16px;font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.06);cursor:pointer;background:none;border:none;transition:color .3s}
+.abtn:hover{color:var(--muted)}
+.aov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:400;overflow-y:auto;padding:36px 16px}
+.aov.open{display:block}
+.abox{max-width:660px;margin:0 auto;background:var(--bg2);border:1px solid var(--bsub);padding:38px}
+.ahdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.atit{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;color:var(--gold-l)}
+.acl{background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;transition:color .2s}
+.acl:hover{color:var(--text)}
+.ain{width:100%;background:var(--bg);border:1px solid var(--bsub);color:var(--text);font-family:'Lato',sans-serif;font-size:.85rem;padding:12px 14px;outline:none;transition:border-color .3s;margin-bottom:12px}
+.ain:focus{border-color:rgba(184,151,46,.4)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.sb2{background:var(--bg3);border:1px solid var(--bsub);padding:16px;text-align:center}
+.sn2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.1rem;color:var(--gold-l);display:block}
+.sl2{font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.ri{padding:13px 0;border-bottom:1px solid var(--bsub);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.rtn{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--gold-l)}
+.rnm{font-size:.84rem;color:var(--text2);margin:2px 0}
+.rem{font-size:.7rem;color:var(--muted)}
+.rmt{font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+.rdl{background:none;border:1px solid rgba(192,96,90,.25);color:var(--err);padding:5px 11px;font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.rdl:hover{background:rgba(192,96,90,.08)}
+.nor{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1rem;text-align:center;padding:30px}
+@media(max-width:560px){.sg{grid-template-columns:1fr 1fr}.abox{padding:22px 14px}.cc{padding:32px 18px}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rot{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="wm"><span class="wm-main">Website by Rayan Tajioui</span><span class="wm-sub">Website created by Rayan Tajioui</span></div>
+
+<header>
+  <p class="pre">Karl-Rehbein-Schule Hanau &nbsp;·&nbsp; Abitur 2026</p>
+  <div class="tw">
+    <span class="t-abi">Abi</span>
+    <span class="t-vegas">Vegas</span>
+    <span class="t-year">2 0 2 6</span>
+  </div>
+  <div class="hrd"><div class="hrl"></div><div class="hdi"></div><div class="hrl"></div></div>
+  <p class="school">Tischreservierung</p>
+</header>
+
+<main>
+  <div class="steps">
+    <div class="step active" id="s1"><div class="sn">I</div><div class="sl">Tisch</div></div>
+    <div class="sc"></div>
+    <div class="step" id="s2"><div class="sn">II</div><div class="sl">Details</div></div>
+    <div class="sc"></div>
+    <div class="step" id="s3"><div class="sn">III</div><div class="sl">Bestätigung</div></div>
+  </div>
+
+  <!-- Panel 1 -->
+  <div class="panel active" id="p1">
+    <h2 class="stitle">Wähle deinen Tisch</h2>
+    <p class="ssub">Klicke auf einen verfügbaren Tisch</p>
+
+    <div class="floor-wrap">
+      <svg id="floorSvg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+            <rect width="8" height="8" fill="#141e14"/>
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#1e321e" stroke-width="3.5"/>
+          </pattern>
+        </defs>
+
+        <!-- Room background -->
+        <rect x="0" y="0" width="800" height="500" fill="#0d0d12"/>
+        <rect x="6" y="6" width="788" height="488" fill="none" stroke="#1e1e28" stroke-width="1"/>
+
+        <!-- Top hatch walls (flanking stage) -->
+        <rect x="6"   y="6" width="168" height="74" fill="url(#hatch)" opacity=".85"/>
+        <rect x="626" y="6" width="168" height="74" fill="url(#hatch)" opacity=".85"/>
+
+        <!-- Stage -->
+        <rect x="178" y="10" width="444" height="64" rx="2" fill="#191924" stroke="#28283a" stroke-width="1"/>
+        <text x="400" y="38" font-family="'Cinzel',serif" font-size="9.5" fill="#48485a" text-anchor="middle" letter-spacing="3">BÜHNE</text>
+        <text x="400" y="54" font-family="'Lato',sans-serif" font-size="7" fill="#303040" text-anchor="middle">1000 × 400 cm · Die Bühne ist KEINE Tanzfläche</text>
+
+        <!-- Standing plastic tables top-left (P circles) -->
+        <g opacity=".32">
+          <circle cx="30"  cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="58"  cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="86"  cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="114" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="142" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="30"  cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="58"  cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="86"  cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="114" cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+        </g>
+        <!-- Standing plastic tables top-right -->
+        <g opacity=".32">
+          <circle cx="658" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="686" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="714" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="742" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="770" cy="96"  r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="658" cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="686" cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="714" cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+          <circle cx="742" cy="124" r="11" fill="#141a22" stroke="#1e2a32" stroke-width="1"/>
+        </g>
+
+        <!-- Dance floor -->
+        <rect x="246" y="84" width="308" height="160" rx="1" fill="#121218" stroke="#1e1e2a" stroke-width="1"/>
+        <rect x="248" y="86" width="304" height="156" fill="none" stroke="#191924" stroke-width="1" stroke-dasharray="5,4"/>
+        <text x="400" y="143" font-family="'Cinzel',serif" font-size="8.5" fill="#32323e" text-anchor="middle" letter-spacing="2.5">TANZFLÄCHE</text>
+        <text x="400" y="157" font-family="'Lato',sans-serif" font-size="6.5" fill="#28283a" text-anchor="middle">900 × 500 cm</text>
+
+        <!-- GREEN WALL 1 (top separator, below standing tables) -->
+        <rect x="6" y="141" width="240" height="12" fill="url(#hatch)" opacity=".9"/>
+        <rect x="554" y="141" width="240" height="12" fill="url(#hatch)" opacity=".9"/>
+
+        <!-- ═══ BOOKABLE ZONE (left / middle / right blocks) ═══ -->
+        <!-- Rendered by JS into these groups -->
+        <g id="leftBlock"></g>
+        <g id="middleBlock"></g>
+        <g id="rightBlock"></g>
+
+        <!-- Middle wall: vertical separator between middle and right blocks -->
+        <rect x="400" y="244" width="12" height="140" fill="url(#hatch)" opacity=".85"/>
+
+        <!-- GREEN WALL 2 (separator below bookable zone) -->
+        <rect x="6" y="380" width="788" height="12" fill="url(#hatch)" opacity=".9"/>
+        <!-- GREEN WALL 3 (Big wall right of last row)-->
+        <rect x="752" y="150" width="42" height="230" fill="url(#hatch)" opacity=".9"/>
+
+        <!-- Bottom standing tables (B circles) -->
+        <g opacity=".28">
+          <circle cx="36"  cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="72"  cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="108" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="144" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="180" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="216" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="360" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="396" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="440" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="560" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="596" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="632" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="668" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="704" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="740" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="776" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <!-- Row 2 -->
+          <circle cx="36"  cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="72"  cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="108" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="144" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="180" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="216" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="360" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="560" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="596" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="632" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="668" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="704" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="740" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="776" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+        </g>
+
+        <!-- Label: Hauseigene Stehtische Buche -->
+        <text x="300" y="430" font-family="'Lato',sans-serif" font-size="7" fill="#2e2020" text-anchor="middle">Hauseigene Stehtische Buche</text>
+
+        <!-- Bottom wall -->
+        <rect x="6" y="484" width="788" height="10" fill="url(#hatch)" opacity=".85"/>
+
+        <!-- Exit arrows -->
+        <g fill="#1a2a1a" stroke="#2a3a2a" stroke-width=".5" opacity=".5" font-family="'Lato',sans-serif" font-size="6" text-anchor="middle">
+          <rect x="76"  y="484" width="32" height="10"/><text x="92"  y="491" fill="#3a5a3a">↓</text>
+          <rect x="196" y="484" width="32" height="10"/><text x="212" y="491" fill="#3a5a3a">↓</text>
+          <rect x="374" y="484" width="52" height="10"/><text x="400" y="491" fill="#3a5a3a">↓</text>
+          <rect x="520" y="484" width="32" height="10"/><text x="536" y="491" fill="#3a5a3a">↓</text>
+          <rect x="680" y="484" width="32" height="10"/><text x="696" y="491" fill="#3a5a3a">↓</text>
+        </g>
+
+        <!-- Tooltip (rendered on top) -->
+        <g id="tooltip" visibility="hidden" pointer-events="none">
+          <rect id="ttbg" rx="3" fill="#141420" stroke="rgba(184,151,46,.45)" stroke-width="1"/>
+          <text id="ttname" font-family="'Cinzel',serif" font-size="7.5" fill="#d4b253"/>
+          <text id="ttinfo" font-family="'Lato',sans-serif" font-size="7" fill="#8a8070"/>
+        </g>
+      </svg>
+
+      <div class="leg">
+        <div class="li"><div class="ld av"></div>Verfügbar</div>
+        <div class="li"><div class="ld sel"></div>Ausgewählt</div>
+        <div class="li"><div class="ld part"></div>Teilweise belegt</div>
+        <div class="li"><div class="ld full"></div>Voll belegt</div>
+        <div class="li"><div class="ld book"></div>Vorgebucht</div>
+      </div>
+    </div>
+
+    <button class="btn" id="btn1" disabled onclick="goTo(2)">Weiter</button>
+  </div>
+
+  <!-- Panel 2 -->
+  <div class="panel" id="p2">
+    <h2 class="stitle">Deine Reservierung</h2>
+    <p class="ssub">Kontaktdaten eingeben</p>
+    <div class="fw">
+      <div class="seld">
+        <div class="sicon" id="fIcon">—</div>
+        <div class="sinfo">
+          <div class="slbl2">Gewählter Tisch</div>
+          <div class="sname" id="fName">—</div>
+        </div>
+        <button class="sch" onclick="goTo(1)">Ändern</button>
+      </div>
+      <div class="fg"><label class="fl" for="iName">Vollständiger Name</label><input class="fi" type="text" id="iName" placeholder="Max Mustermann" autocomplete="name"></div>
+      <div class="fg"><label class="fl" for="iEmail">E-Mail-Adresse</label><input class="fi" type="email" id="iEmail" placeholder="deine@email.de" autocomplete="email"><p class="fh">Du erhältst eine Bestätigungs-PDF per E-Mail.</p></div>
+      <div class="fg">
+        <label class="fl">Anzahl der Plätze</label>
+        <div class="sr">
+          <button class="sbt" onclick="chSeat(-1)">−</button>
+          <span class="sct" id="sCnt">1</span>
+          <button class="sbt" onclick="chSeat(1)">+</button>
+          <span class="smx" id="sMax"></span>
+        </div>
+      </div>
+      <button class="btn" id="btnSub" onclick="submitRes()">Reservierung bestätigen</button>
+      <button class="btnb" onclick="goTo(1)">← Zurück</button>
+    </div>
+  </div>
+
+  <!-- Panel 3 -->
+  <div class="panel" id="p3">
+    <div class="cc">
+      <span class="csym">✦ AbiVegas 2026 ✦</span>
+      <h2 class="ctit">Reserviert</h2>
+      <p class="csb">Deine Plätze sind gesichert</p>
+      <div class="crows">
+        <div class="crow"><span class="crl">Name</span><span class="crv" id="cName">—</span></div>
+        <div class="crow"><span class="crl">E-Mail</span><span class="crv" id="cEmail">—</span></div>
+        <div class="crow"><span class="crl">Tisch</span><span class="crv" id="cTable">—</span></div>
+        <div class="crow"><span class="crl">Plätze</span><span class="crv" id="cSeats">—</span></div>
+        <div class="crow"><span class="crl">Code</span><span class="crv" id="cCode">—</span></div>
+      </div>
+      <p class="cnote"><br>Bringe diese zum Einlass mit.</p>
+      <button class="bpdf" id="dlPdf" onclick="downloadPdf()">PDF herunterladen</button><br>
+      <button class="brs" onclick="restart()">Neue Reservierung</button>
+    </div>
+  </div>
+</main>
+
+<button class="abtn" onclick="openAdmin()">Admin</button>
+<div class="aov" id="aov">
+  <div class="abox">
+    <div class="ahdr"><h2 class="atit">Reservierungen</h2><button class="acl" onclick="closeAdmin()">×</button></div>
+    <div id="admContent">
+      <input class="ain" type="password" id="admPw" placeholder="Admin-Passwort …">
+      <button class="btn" style="margin-top:0" onclick="loadAdmin()">Anmelden</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── How to edit table locations ──────────────────────────────────────────────
+// Table positions are calculated by the tablePos(id) function below.
+// Constants:
+//   TW=52, TH=30: Table width and height (scaled representation)
+//   Actual table size: 1.50m wide × 2.02m long
+//   HGAP=6, VGAP=16: Horizontal and vertical gaps
+//   LX0=10: Left block starting X
+//   MX0=324: Middle block starting X
+//   RX0=502: Right block starting X
+//   ROW_Y_LEFT=[156, 202, 248, 294, 340]: Y positions for left block rows (5 rows)
+//   ROW_Y_SIDE=[156, 202, 248, 294]: Y positions for middle/right rows (4 rows)
+//   TEACHER_ID=99: Special teacher table ID
+//
+// To change positions:
+// - Adjust LX0, MX0, RX0 for each block start
+// - Modify ROW_Y_LEFT or ROW_Y_SIDE arrays for row heights
+// - Change the logic in tablePos() for a different layout
+//
+// Note: Current floor plan layout description:
+//   - Total of 57 tables
+//   - Left side: 5 rows of 5 tables
+//   - Middle section: 4 rows of 3 tables, with a wall separation after 2 rows
+//   - Right side: 4 rows of 5 tables
+
+const TW=30, TH=37, HGAP=20, VGAP=1;
+const LX0=10, MX0=280, M2X0=450, RX0=570;
+const ROW_Y_LEFT=[156, 202, 248, 294, 340];
+const ROW_Y_RIGHT=[156, 202, 248, 294, 340];
+const ROW_Y_SIDE=[248, 294, 340];
+const TEACHER_ID = 99;
+
+function tablePos(id) {
+  // Left block: IDs 1-25, 5 per row, 5 rows
+  if (id >= 1 && id <= 25) {
+    const i   = id - 1;
+    const row = Math.floor(i / 5);
+    const col = i % 5;
+    return { x: LX0 + col * (TW + HGAP), y: ROW_Y_LEFT[row] };
+  }
+  // Middle block: IDs 26-32, 2 per row, 3 rows
+  if (id >= 26 && id <= 31) {
+    const i   = id - 26;
+    const row = Math.floor(i / 2);
+    const col = i % 2;
+    return { x: MX0 + col * (TW + HGAP), y: ROW_Y_SIDE[row] };
+  }
+    if (id >= 32 && id <= 37) {
+    const i   = id - 32;
+    const row = Math.floor(i / 2);
+    const col = i % 2;
+    return { x: M2X0 + col * (TW + HGAP), y: ROW_Y_SIDE[row] };
+  }
+  // Right block: IDs 38-57, 5 per row, 4 rows
+  if (id >= 38 && id <= 57) {
+    const i   = id - 38;
+    const row = Math.floor(i / 4);
+    const col = i % 4;
+    return { x: RX0 + col * (TW + HGAP), y: ROW_Y_RIGHT[row] };
+  }
+  // Teacher table: fixed special position near the left block
+  if (id === TEACHER_ID) {
+    return { x: LX0 + 5 * (TW + HGAP) + 20, y: ROW_Y_LEFT[1] };
+  }
+  return null;
+}
+
+let tables = [], selId = null, seats = 1;
+
+async function loadTables() {
+  try {
+    const r = await fetch('/api/tables');
+    tables = await r.json();
+    renderFloor();
+  } catch(e) {
+    document.getElementById('leftBlock').innerHTML =
+      '<text x="200" y="260" font-size="10" fill="#c0605a" text-anchor="middle" font-family="Cinzel,serif">Verbindungsfehler</text>';
+  }
+}
+
+function renderFloor() {
+  const lb = document.getElementById('leftBlock');
+  const mb = document.getElementById('middleBlock');
+  const rb = document.getElementById('rightBlock');
+  lb.innerHTML = '';
+  mb.innerHTML = '';
+  rb.innerHTML = '';
+
+  // Add center gap label
+  const gap = document.createElementNS('http://www.w3.org/2000/svg','text');
+  gap.setAttribute('x','400'); gap.setAttribute('y','248');
+  gap.setAttribute('font-family',"'Cinzel',serif"); gap.setAttribute('font-size','6.5');
+  gap.setAttribute('fill','rgba(80,80,100,.5)'); gap.setAttribute('text-anchor','middle');
+  gap.setAttribute('letter-spacing','2');
+  gap.textContent = '';
+  lb.appendChild(gap);
+
+  tables.forEach(t => {
+    const pos = tablePos(t.id);
+    if (!pos) return;
+
+    const isTeacher = t.teacher || t.id === TEACHER_ID;
+    const full    = isTeacher || t.available <= 0;
+    const partial = !isTeacher && t.booked > 0 && !full;
+    const sel     = t.id === selId;
+
+    // Colors
+    let fill, stroke, textFill, labelExtra = '';
+    if (isTeacher) {
+      fill='rgba(80,110,180,.14)'; stroke='rgba(100,140,220,.35)'; textFill='rgba(130,160,230,.7)';
+      labelExtra = ' (vorgebucht)';
+    } else if (sel) {
+      fill='rgba(184,151,46,.28)'; stroke='rgba(184,151,46,.85)'; textFill='rgba(228,198,100,.95)';
+    } else if (full) {
+      fill='rgba(192,96,90,.22)'; stroke='rgba(192,96,90,.55)'; textFill='rgba(192,96,90,.7)';
+    } else if (partial) {
+      fill='rgba(180,110,70,.12)'; stroke='rgba(192,96,90,.3)'; textFill='rgba(184,151,46,.7)';
+    } else {
+      fill='rgba(184,151,46,.07)'; stroke='rgba(184,151,46,.25)'; textFill='rgba(184,151,46,.7)';
+    }
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.style.cursor = (!isTeacher && !full) ? 'pointer' : 'default';
+
+    // Table body
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x',pos.x); rect.setAttribute('y',pos.y);
+    rect.setAttribute('width',TW); rect.setAttribute('height',TH);
+    rect.setAttribute('rx','2');
+    rect.setAttribute('fill',fill); rect.setAttribute('stroke',stroke); rect.setAttribute('stroke-width','1');
+    g.appendChild(rect);
+
+    // Table label
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x', pos.x+TW/2); lbl.setAttribute('y', pos.y+TH/2+3);
+    lbl.setAttribute('font-family',"'Cinzel',serif"); lbl.setAttribute('font-size', isTeacher?'6':'8');
+    lbl.setAttribute('fill',textFill); lbl.setAttribute('text-anchor','middle');
+    lbl.setAttribute('letter-spacing','.3');
+    lbl.textContent = isTeacher ? 'Lehrer' : t.icon;
+    g.appendChild(lbl);
+
+    // Partial fill indicator — small bar at bottom of table
+    if (partial && !isTeacher) {
+      const pct = t.booked / t.max_seats;
+      const barW = Math.round((TW - 4) * pct);
+      const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      bar.setAttribute('x', pos.x+2); bar.setAttribute('y', pos.y+TH-4);
+      bar.setAttribute('width', barW); bar.setAttribute('height', 2);
+      bar.setAttribute('rx','1'); bar.setAttribute('fill','rgba(192,96,90,.7)');
+      g.appendChild(bar);
+    }
+
+    // Interactions
+    if (!isTeacher && !full) {
+      g.addEventListener('click', () => { selId=t.id; seats=1; renderFloor(); document.getElementById('btn1').disabled=false; });
+    }
+    g.addEventListener('mouseenter', () => showTT(t, pos, isTeacher, full, partial));
+    g.addEventListener('mouseleave', hideTT);
+
+    if (t.id >= 1 && t.id <= 25) lb.appendChild(g);
+    else if (t.id >= 26 && t.id <= 37) mb.appendChild(g);
+    else if (t.id >= 38 && t.id <= 57) rb.appendChild(g);
+    else if (t.id === TEACHER_ID) lb.appendChild(g);
+  });
+}
+
+function showTT(t, pos, isTeacher, full, partial) {
+  const tt  = document.getElementById('tooltip');
+  const bg  = document.getElementById('ttbg');
+  const nm  = document.getElementById('ttname');
+  const inf = document.getElementById('ttinfo');
+
+  nm.textContent  = isTeacher ? 'Lehrertisch' : t.name;
+  inf.textContent = isTeacher ? 'Vorgebucht – nicht buchbar' :
+    full ? 'Vollständig belegt' :
+    partial ? `${t.booked} / ${t.max_seats} belegt` :
+    `${t.available} von ${t.max_seats} Plätzen frei`;
+
+  const W=130, H=34, margin=6;
+  let tx = Math.min(pos.x, 800-W-margin);
+  let ty = pos.y - H - 6;
+  if (ty < 6) ty = pos.y + TH + 6;
+
+  bg.setAttribute('x',tx); bg.setAttribute('y',ty);
+  bg.setAttribute('width',W); bg.setAttribute('height',H);
+  nm.setAttribute('x',tx+6); nm.setAttribute('y',ty+13);
+  inf.setAttribute('x',tx+6); inf.setAttribute('y',ty+25);
+  tt.setAttribute('visibility','visible');
+}
+function hideTT() { document.getElementById('tooltip').setAttribute('visibility','hidden'); }
+
+function getWatermarkText() {
+  return localStorage.getItem('wmText') || 'Website by Rayan Tajioui';
+}
+
+function setWatermarkText(text) {
+  const wmMain = document.querySelector('.wm-main');
+  const value = text?.trim() || 'Website by Rayan Tajioui';
+  localStorage.setItem('wmText', value);
+  if (wmMain) wmMain.textContent = value;
+}
+
+function saveWatermark() {
+  const input = document.getElementById('wmInput');
+  if (!input) return;
+  setWatermarkText(input.value);
+  toast('Wasserzeichen gespeichert', 'ok');
+}
+
+function loadWatermark() {
+  setWatermarkText(getWatermarkText());
+}
+
+function goTo(n) {
+  [['p1','s1'],['p2','s2'],['p3','s3']].forEach(([p,s],i) => {
+    document.getElementById(p).classList.toggle('active',i+1===n);
+    const st=document.getElementById(s);
+    st.classList.remove('active','done');
+    if(i+1<n) st.classList.add('done');
+    if(i+1===n) st.classList.add('active');
+  });
+  if(n===2&&selId){
+    const t=tables.find(t=>t.id===selId);
+    document.getElementById('fIcon').textContent=t.icon;
+    document.getElementById('fName').textContent=t.name;
+    document.getElementById('sMax').textContent='max. '+t.available;
+    seats=Math.min(seats,t.available);
+    document.getElementById('sCnt').textContent=seats;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function chSeat(d) {
+  const t=tables.find(t=>t.id===selId);
+  seats=Math.max(1,Math.min(t.available,seats+d));
+  document.getElementById('sCnt').textContent=seats;
+}
+
+async function submitRes() {
+  const name=document.getElementById('iName').value.trim();
+  const email=document.getElementById('iEmail').value.trim();
+  if(!name){toast('Bitte Namen eingeben','err');return;}
+  if(!email||!/^[^@]+@[^@]+\.[^@]+$/.test(email)){toast('Ungültige E-Mail','err');return;}
+  const btn=document.getElementById('btnSub');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Wird reserviert …';
+  try{
+    const r=await fetch('/api/reserve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,table_id:selId,seats})});
+    const data=await r.json();
+    if(!r.ok){
+      toast(data.error||'Fehler aufgetreten','err');
+      btn.disabled=false;btn.innerHTML='Reservierung bestätigen';
+      if(r.status===409) await loadTables();
+      return;
+    }
+    document.getElementById('cName').textContent=name;
+    document.getElementById('cEmail').textContent=email;
+    document.getElementById('cTable').textContent=data.table_name;
+    document.getElementById('cSeats').textContent=seats+(seats===1?' Platz':' Plätze');
+    document.getElementById('cCode').textContent=data.conf_code;
+    document.getElementById('dlPdf').href='/api/pdf/'+data.conf_code;
+    await loadTables();goTo(3);
+    toast('Reservierung erfolgreich','ok');
+  }catch(e){
+    toast('Netzwerkfehler','err');
+    btn.disabled=false;btn.innerHTML='Reservierung bestätigen';
+  }
+}
+
+async function restart(){
+  selId=null;seats=1;
+  document.getElementById('iName').value='';
+  document.getElementById('iEmail').value='';
+  document.getElementById('btn1').disabled=true;
+  await loadTables();goTo(1);
+}
+
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type+' show';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function openAdmin(){document.getElementById('aov').classList.add('open');}
+function closeAdmin(){document.getElementById('aov').classList.remove('open');}
+
+async function loadAdmin(){
+  const pw=document.getElementById('admPw').value;
+  const r=await fetch('/api/admin/reservations?pw='+encodeURIComponent(pw));
+  if(!r.ok){toast('Falsches Passwort','err');return;}
+  const data=await r.json();
+  const ts=data.reduce((s,r)=>s+r.seats,0);
+  const tt=new Set(data.map(r=>r.table_id)).size;
+  document.getElementById('admContent').innerHTML=`
+    <div class="sg">
+      <div class="sb2"><span class="sn2">${data.length}</span><span class="sl2">Reservierungen</span></div>
+      <div class="sb2"><span class="sn2">${ts}</span><span class="sl2">Plätze</span></div>
+      <div class="sb2"><span class="sn2">${tt}</span><span class="sl2">Tische</span></div>
+    </div>
+    <div class="fg">
+      <label class="fl" for="wmInput">Wasserzeichen / Creator</label>
+      <input class="ain" type="text" id="wmInput" value="${esc(getWatermarkText())}" placeholder="Website by Rayan Tajioui">
+    </div>
+    <button class="btn" style="margin-top:0" onclick="saveWatermark()">Wasserzeichen speichern</button>
+    <button class="btn" style="margin-top:12px" onclick="exportExcel('${pw}')">Excel exportieren</button>
+    ${data.length?data.map(r=>`
+      <div class="ri">
+        <div>
+          <div class="rtn">${esc(r.table_name)}</div>
+          <div class="rnm">${esc(r.name)}</div>
+          <div class="rem">${esc(r.email)}</div>
+          <div class="rmt">${esc(r.created_at)} · ${r.seats} Pl. · ${esc(r.conf_code)}</div>
+        </div>
+        <button class="rdl" onclick="delRes(${r.id},'${pw}')">Entfernen</button>
+      </div>`).join(''):'<p class="nor">Noch keine Reservierungen</p>'}
+    <button class="btnb" style="margin-top:20px;display:block" onclick="resetAdm()">Abmelden</button>`;
+}
+
+function resetAdm(){document.getElementById('admContent').innerHTML='<input class="ain" type="password" id="admPw" placeholder="Admin-Passwort …"><button class="btn" style="margin-top:0" onclick="loadAdmin()">Anmelden</button>';}
+
+async function exportExcel(pw){
+  try {
+    const r = await fetch('/api/admin/export-excel?pw='+encodeURIComponent(pw));
+    if (!r.ok) { toast('Export fehlgeschlagen', 'err'); return; }
+    const blob = await r.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Abiball_Reservierungen.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    toast('Excel exportiert', 'ok');
+  } catch(e) {
+    toast('Fehler beim Export', 'err');
+  }
+}
+
+async function delRes(id,pw){
+  if(!confirm('Reservierung löschen?'))return;
+  await fetch('/api/admin/delete/'+id+'?pw='+encodeURIComponent(pw),{method:'DELETE'});
+  await loadTables();loadAdmin();
+  setTimeout(()=>{const e=document.getElementById('admPw');if(e)e.value=pw;},10);
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function downloadPdf() {
+  const btn = document.getElementById('dlPdf');
+  if (btn.href) {
+    window.location.href = btn.href;
+  }
+}
+
+loadWatermark();
+loadTables();
+</script>
+</body>
+</html>
