@@ -335,7 +335,7 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
         <button class="sch" onclick="goTo(1)">Ändern</button>
       </div>
       <div class="fg"><label class="fl" for="iName">Vollständiger Name</label><input class="fi" type="text" id="iName" placeholder="Max Mustermann" autocomplete="name"></div>
-      <div class="fg"><label class="fl" for="iEmail">E-Mail-Adresse</label><input class="fi" type="email" id="iEmail" placeholder="deine@email.de" autocomplete="email"><p class="fh">Du erhältst eine Bestätigungs-PDF per E-Mail.</p></div>
+      <div class="fg"><label class="fl" for="iEmail">E-Mail-Adresse</label><input class="fi" type="email" id="iEmail" placeholder="deine@email.de" autocomplete="email"></div>
       <div class="fg">
         <label class="fl">Anzahl der Plätze</label>
         <div class="sr">
@@ -682,7 +682,7 @@ async function loadAdmin(){
     </div>
     <div class="fg">
       <label class="fl" for="wmInput">Wasserzeichen / Creator</label>
-      <input class="ain" type="text" id="wmInput" value="${esc(getWatermarkText())}" placeholder="Website by Rayan Tajioui">
+      <input class="ain" type="text" id="wmInput" value="${esc(getWatermarkText())}" placeholder="AbiVegas 2026">
     </div>
     <button class="btn" style="margin-top:0" onclick="saveWatermark()">Wasserzeichen speichern</button>
     <button class="btn" style="margin-top:12px" onclick="exportExcel('${pw}')">Excel exportieren</button>
