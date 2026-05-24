@@ -27,7 +27,7 @@ SMTP_HOST  = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
 SMTP_PORT  = int(os.environ.get('SMTP_PORT', '587'))
 SMTP_USER  = os.environ.get('SMTP_USER', '')
 SMTP_PASS  = os.environ.get('SMTP_PASS', '')
-ADMIN_PW   = os.environ.get('ADMIN_PW',  'abiball2026admin')
+ADMIN_PW   = os.environ.get('ADMIN_PW',  'AbiVegas2026')
 EMAIL_ENABLED = bool(SMTP_USER and SMTP_PASS)
 
 TABLES = [
