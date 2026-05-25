@@ -63,8 +63,8 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
 .ld{width:10px;height:10px;border:1px solid}
 .ld.av  {border-color:rgba(184,151,46,.35);background:rgba(184,151,46,.08)}
 .ld.sel {border-color:var(--gold);background:rgba(184,151,46,.28)}
-.ld.part{border-color:rgba(192,96,90,.45);background:rgba(192,96,90,.18)}
-.ld.full{border-color:rgba(192,96,90,.6);background:rgba(192,96,90,.32)}
+.ld.part{border-color:rgba(255, 115, 0, 0.685);background:rgba(192,96,90,.18)}
+.ld.full{border-color:rgba(255, 17, 0, 0.6);background:rgba(192,96,90,.32)}
 .ld.book{border-color:rgba(100,140,220,.4);background:rgba(80,110,180,.2)}
 
 /* Buttons */
@@ -181,7 +181,7 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
     <p class="ssub">Klicke auf einen verfügbaren Tisch</p>
 
     <div class="floor-wrap">
-      <svg id="floorSvg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+      <svg id="floorSvg" viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
             <rect width="8" height="8" fill="#141e14"/>
@@ -190,8 +190,8 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
         </defs>
 
         <!-- Room background -->
-        <rect x="0" y="0" width="800" height="500" fill="#0d0d12"/>
-        <rect x="6" y="6" width="788" height="488" fill="none" stroke="#1e1e28" stroke-width="1"/>
+        <rect x="0" y="0" width="800" height="580" fill="#0d0d12"/>
+        <rect x="6" y="6" width="788" height="568" fill="none" stroke="#1e1e28" stroke-width="1"/>
 
         <!-- Top hatch walls (flanking stage) -->
         <rect x="6"   y="6" width="168" height="74" fill="url(#hatch)" opacity=".85"/>
@@ -242,9 +242,13 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
         <g id="leftBlock"></g>
         <g id="middleBlock"></g>
         <g id="rightBlock"></g>
+        <g id="bottomBlockL"></g>
+        <g id ="bottomBlockR"></g>
+        <g id="bottomBlockM"></g>
 
         <!-- Middle wall: vertical separator between middle and right blocks -->
         <rect x="400" y="244" width="12" height="140" fill="url(#hatch)" opacity=".85"/>
+        <rect x="400" y="384" width="12" height="175" fill="url(#hatch)" opacity=".85"/>
 
         <!-- GREEN WALL 2 (separator below bookable zone) -->
         <rect x="6" y="380" width="788" height="12" fill="url(#hatch)" opacity=".9"/>
@@ -252,54 +256,29 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
         <rect x="752" y="150" width="42" height="230" fill="url(#hatch)" opacity=".9"/>
 
         <!-- Bottom standing tables (B circles) -->
-        <g opacity=".28">
-          <circle cx="36"  cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="72"  cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="108" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="144" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="180" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="216" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="360" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="396" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="440" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="560" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="596" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="632" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="668" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="704" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="740" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="776" cy="408" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+ <g opacity=".28">
           <!-- Row 2 -->
-          <circle cx="36"  cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="72"  cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="108" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="144" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="180" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="216" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="360" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="560" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="596" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="632" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="668" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="704" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="740" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
-          <circle cx="776" cy="446" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="36"  cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="72"  cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="108" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="144" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="180" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="216" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="360" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="560" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="596" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="632" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="668" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="704" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="740" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
+          <circle cx="776" cy="522" r="13" fill="#1e1414" stroke="#2e1e1e" stroke-width="1"/>
         </g>
 
-        <!-- Label: Hauseigene Stehtische Buche -->
-        <text x="300" y="430" font-family="'Lato',sans-serif" font-size="7" fill="#2e2020" text-anchor="middle">Hauseigene Stehtische Buche</text>
+        <!-- Label: Hauseigene Stehtische Buche - NEUE Position -->
+        <text x="300" y="506" font-family="'Lato',sans-serif" font-size="7" fill="#2e2020" text-anchor="middle">Hauseigene Stehtische Buche</text>
 
-        <!-- Bottom wall -->
-        <rect x="6" y="484" width="788" height="10" fill="url(#hatch)" opacity=".85"/>
-
-        <!-- Exit arrows -->
-        <g fill="#1a2a1a" stroke="#2a3a2a" stroke-width=".5" opacity=".5" font-family="'Lato',sans-serif" font-size="6" text-anchor="middle">
-          <rect x="76"  y="484" width="32" height="10"/><text x="92"  y="491" fill="#3a5a3a">↓</text>
-          <rect x="196" y="484" width="32" height="10"/><text x="212" y="491" fill="#3a5a3a">↓</text>
-          <rect x="374" y="484" width="52" height="10"/><text x="400" y="491" fill="#3a5a3a">↓</text>
-          <rect x="520" y="484" width="32" height="10"/><text x="536" y="491" fill="#3a5a3a">↓</text>
-          <rect x="680" y="484" width="32" height="10"/><text x="696" y="491" fill="#3a5a3a">↓</text>
-        </g>
+        <!-- Bottom wall - NEUE Position -->
+        <rect x="6" y="560" width="788" height="10" fill="url(#hatch)" opacity=".85"/>
 
         <!-- Tooltip (rendered on top) -->
         <g id="tooltip" visibility="hidden" pointer-events="none">
@@ -408,10 +387,11 @@ main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 1
 //   - Right side: 4 rows of 5 tables
 
 const TW=30, TH=37, HGAP=20, VGAP=1;
-const LX0=10, MX0=280, M2X0=450, RX0=570;
+const LX0=10, MX0=280, M2X0=450, RX0=570, R2X0=590, BX0=10, NX0=545;
 const ROW_Y_LEFT=[156, 202, 248, 294, 340];
 const ROW_Y_RIGHT=[156, 202, 248, 294, 340];
 const ROW_Y_SIDE=[248, 294, 340];
+const ROW_Y_BottomL=[400, 445];
 const TEACHER_ID = 99;
 
 function tablePos(id) {
@@ -442,6 +422,37 @@ function tablePos(id) {
     const col = i % 4;
     return { x: RX0 + col * (TW + HGAP), y: ROW_Y_RIGHT[row] };
   }
+if (id >= 58 && id <= 67) {
+    const i   = id - 58;
+    const row = Math.floor(i / 5);
+    const col = i % 5;
+    return { x: BX0 + col * (TW + HGAP), y: ROW_Y_BottomL[row] };
+  }
+if (id >= 68 && id <= 71) {
+    const i   = id - 68;
+    const row = Math.floor(i / 2);
+    const col = i % 2;
+    return { x: MX0 + col * (TW + HGAP), y: ROW_Y_BottomL[row] };
+  }
+if (id >= 72 && id <= 75) {
+    const i   = id - 72;
+    const row = Math.floor(i / 2);
+    const col = i % 2;
+    return { x: M2X0 + col * (TW + HGAP), y: ROW_Y_BottomL[row] };
+  }
+  if (id >= 76 && id <= 83) {
+    const i   = id - 76;
+    const row = Math.floor(i / 4);
+    const col = i % 4;
+    return { x: R2X0 + col * (TW + HGAP), y: ROW_Y_BottomL[row] };
+  }
+  if (id >= 84 && id <= 85) {
+    const i   = id - 84;
+    const row = Math.floor(i / 1);
+    const col = i % 1;
+    return { x: NX0 + col * (TW + HGAP), y: ROW_Y_BottomL[row] };
+  }
+
   // Teacher table: fixed special position near the left block
   if (id === TEACHER_ID) {
     return { x: LX0 + 5 * (TW + HGAP) + 20, y: ROW_Y_LEFT[1] };
@@ -466,9 +477,15 @@ function renderFloor() {
   const lb = document.getElementById('leftBlock');
   const mb = document.getElementById('middleBlock');
   const rb = document.getElementById('rightBlock');
+  const bbL = document.getElementById('bottomBlockL');
+  const bbR = document.getElementById('bottomBlockR');
+  const bbM = document.getElementById('bottomBlockM');
   lb.innerHTML = '';
   mb.innerHTML = '';
   rb.innerHTML = '';
+  bbL.innerHTML = '';
+  bbR.innerHTML = '';
+  bbM.innerHTML = '';
 
   // Add center gap label
   const gap = document.createElementNS('http://www.w3.org/2000/svg','text');
@@ -544,6 +561,9 @@ function renderFloor() {
     if (t.id >= 1 && t.id <= 25) lb.appendChild(g);
     else if (t.id >= 26 && t.id <= 37) mb.appendChild(g);
     else if (t.id >= 38 && t.id <= 57) rb.appendChild(g);
+    else if (t.id >= 58 && t.id <= 67) bbL.appendChild(g);
+    else if (t.id >= 68 && t.id <= 71) bbM.appendChild(g);
+    else if (t.id >= 72 && t.id <= 85) bbR.appendChild(g);
     else if (t.id === TEACHER_ID) lb.appendChild(g);
   });
 }
