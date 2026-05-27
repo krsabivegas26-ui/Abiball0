@@ -31,7 +31,7 @@ ADMIN_PW   = os.environ.get('ADMIN_PW',  'AbiVegas2026admin')
 EMAIL_ENABLED = bool(SMTP_USER and SMTP_PASS)
 
 TABLES = [
-    {"id":  1, "name": "Lehrertisch", "icon": "A1", "max_seats": 4, "teacher": True},
+    {"id":  1, "name": "Tisch A1", "icon": "A1", "max_seats": 4,},
     {"id":  2, "name": "Tisch A2", "icon": "A2", "max_seats": 4},
     {"id":  3, "name": "Tisch A3", "icon": "A3", "max_seats": 4},
     {"id":  4, "name": "Tisch A4", "icon": "A4", "max_seats": 4},
@@ -79,15 +79,15 @@ TABLES = [
     {"id": 46, "name": "Tisch C10", "icon": "C10", "max_seats": 4},
     {"id": 47, "name": "Tisch C11", "icon": "C11", "max_seats": 4},
     {"id": 48, "name": "Tisch C12", "icon": "C12", "max_seats": 4},
-    {"id": 49, "name": "Tisch C13", "icon": "C13", "max_seats": 4},
+    {"id": 49, "name": "Lehrer Tisch", "icon": "C13", "max_seats": 4,  "teacher": True},
     {"id": 50, "name": "Tisch M1", "icon": "D10", "max_seats": 4},
     {"id": 51, "name": "Tisch M2", "icon": "D11", "max_seats": 4},
     {"id": 52, "name": "Tisch M3", "icon": "D12", "max_seats": 4},
-    {"id": 53, "name": "Tisch M4", "icon": "D13", "max_seats": 4},
+    {"id": 53, "name": "Lehrer Tisch", "icon": "D13", "max_seats": 4,  "teacher": True},
     {"id": 54, "name": "Tisch N1", "icon": "E10", "max_seats": 4},
     {"id": 55, "name": "Tisch N2", "icon": "E11", "max_seats": 4},
     {"id": 56, "name": "Tisch N3", "icon": "E12", "max_seats": 4},
-    {"id": 57, "name": "Tisch N4", "icon": "E13", "max_seats": 4},
+    {"id": 57, "name": "Lehrer Tisch", "icon": "E13", "max_seats": 4, "teacher": True},
     {"id": 58, "name": "Tisch F1", "icon": "F1", "max_seats": 4},
     {"id": 59, "name": "Tisch F2", "icon": "F2", "max_seats": 4},
     {"id": 60, "name": "Tisch F3", "icon": "F3", "max_seats": 4},
